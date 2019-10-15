@@ -1,2 +1,2 @@
 # extra
-Expense tracking application - server
+simple springboot hibernate application

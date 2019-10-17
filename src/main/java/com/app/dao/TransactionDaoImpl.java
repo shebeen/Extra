@@ -2,6 +2,7 @@ package com.app.dao;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 
 import org.hibernate.Session;
@@ -15,7 +16,6 @@ import com.app.model.Transaction;
 @Repository
 @Transactional
 public class TransactionDaoImpl implements TransactionDao{
-	
 	@Autowired
 	SessionFactory sessionFactory;
 	
@@ -36,7 +36,12 @@ public class TransactionDaoImpl implements TransactionDao{
 
 	public Transaction updateTransaction(Transaction transaction) {
 		Session session = sessionFactory.getCurrentSession();
-		session.update(transaction);
+		if(session.contains(transaction)) {
+			session.merge(transaction);
+		}
+		else {
+			session.update(transaction);
+		}
 		return transaction;
 	}
 

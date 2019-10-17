@@ -12,7 +12,7 @@ import javax.persistence.Id;
 public class Transaction {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	int id;
+	long id;
 	
 	@Column
 	int type;
@@ -26,11 +26,11 @@ public class Transaction {
 	@Column
 	int amount;
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

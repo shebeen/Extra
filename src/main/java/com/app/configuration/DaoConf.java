@@ -67,17 +67,16 @@ public class DaoConf {
 	@Bean
 	public DataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 		dataSource.setUrl("jdbc:mysql://localhost:3306/extra");
 		dataSource.setUsername("root");
 		return dataSource;
 	}
 
-//	    @Bean
-//	    public HibernateTransactionManager transactionManager() {
-//	        HibernateTransactionManager txManager = new HibernateTransactionManager();
-//	        txManager.setSessionFactory(sessionFactory().getObject());
-//	        return txManager;
-//	    }
+	    @Bean
+	    public HibernateTransactionManager transactionManager() {
+	        HibernateTransactionManager txManager = new HibernateTransactionManager();
+	        txManager.setSessionFactory(sessionFactory().getObject());
+	        return txManager;
+	    }
 
 }

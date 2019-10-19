@@ -36,12 +36,7 @@ public class TransactionDaoImpl implements TransactionDao{
 
 	public Transaction updateTransaction(Transaction transaction) {
 		Session session = sessionFactory.getCurrentSession();
-		if(session.contains(transaction)) {
-			session.merge(transaction);
-		}
-		else {
-			session.update(transaction);
-		}
+		session.update(transaction);
 		return transaction;
 	}
 

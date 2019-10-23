@@ -19,9 +19,10 @@ public class TransactionDaoImpl implements TransactionDao{
 	@Autowired
 	SessionFactory sessionFactory;
 	
-	public void save(Transaction transaction) {
+	public Transaction save(Transaction transaction) {
 		Session session = sessionFactory.getCurrentSession();
-		session.saveOrUpdate(transaction);
+		session.save(transaction);
+		return transaction;
 	}
 	
 	public List<Transaction> findAll() {

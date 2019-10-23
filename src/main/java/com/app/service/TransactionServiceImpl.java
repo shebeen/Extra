@@ -15,9 +15,9 @@ public class TransactionServiceImpl implements TransactionService {
 	@Autowired
 	TransactionDao transactionDao;
 
-	public void createTransaction(Transaction transaction) {
+	public Transaction createTransaction(Transaction transaction) {
 		// TODO Auto-generated method stub
-		transactionDao.save(transaction);
+		return transactionDao.save(transaction);
 	}
 
 	public List<Transaction> getTransactions() {

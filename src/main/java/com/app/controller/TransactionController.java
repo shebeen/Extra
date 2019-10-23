@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,7 @@ import com.app.model.Transaction;
 import com.app.service.TransactionService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(value = { "/transaction" })
 public class TransactionController {
 	@Autowired
@@ -37,13 +39,13 @@ public class TransactionController {
 	}
 
 	@PostMapping(value = "/create", headers = "Accept=application/json")
-	public ResponseEntity<Void> createTransaction(@RequestBody Transaction transaction,
+	public ResponseEntity<Transaction> createTransaction(@RequestBody Transaction transaction,
 			UriComponentsBuilder ucBuilder) {
-		System.out.println("Creating User " + transaction.getDescription());
-		transactionService.createTransaction(transaction);
+		System.out.println("Creating User " + transaction.getDate());
+		transaction = transactionService.createTransaction(transaction);
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(ucBuilder.path("/transaction/{id}").buildAndExpand(transaction.getId()).toUri());
-		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+		return new ResponseEntity<Transaction>(transaction,headers, HttpStatus.CREATED);
 	}
 
 	@GetMapping(value = "/all", headers = "Accept=application/json")
@@ -65,12 +67,13 @@ public class TransactionController {
 	
 	@DeleteMapping(value="/{id}", headers ="Accept=application/json")
 	public ResponseEntity<Transaction> deleteUser(@PathVariable("id") long id){
+		System.out.println("Delete hit!");
 		Transaction transaction = transactionService.findById(id);
 		if (transaction == null) {
 			return new ResponseEntity<Transaction>(HttpStatus.NOT_FOUND);
 		}
 		transactionService.deleteTransactionById(id);
-		return new ResponseEntity<Transaction>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<Transaction>(HttpStatus.OK);
 	}
 
 }
